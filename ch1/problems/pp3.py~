@@ -1,0 +1,11 @@
+def combinations(n, k):
+    if n == k:
+        return 1
+    elif k == 0:
+        return 1
+    else:
+        if 0 < k and k < n:
+            return combinations(n-1, k-1) + combinations(n-1, k)
+        else:
+            return None
+

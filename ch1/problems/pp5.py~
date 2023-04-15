@@ -1,0 +1,1 @@
+def reverse_display(X, N, txt):
