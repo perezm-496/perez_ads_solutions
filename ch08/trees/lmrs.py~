@@ -1,0 +1,96 @@
+"""Left most right sibling implemantation of a tree."""
+
+
+class LMRSNode:
+    """
+     Node designed to be used in a left most right sibling
+    implementation of a tree.
+    """
+
+    def __init__(self, key, data, sibling=None, lmchild=None, parent=None):
+        self.key = key
+        self.data = data
+        self.sibling = sibling
+        self.lmchild = lmchild
+        if parent is not None:
+            self.parent = parent
+
+    def children(self):
+        child_list = []
+        curr_child = self.lmchild
+        while curr_child is not None:
+            child_list.append(curr_child)
+            curr_child = curr_child.sibling
+        return child_list
+
+    def is_leaf(self):
+        return self.lmchild is not None
+
+    def __str__(self):
+        txt = ""
+        txt += str(self.key) + "-" + str(self.data)
+        return txt
+
+
+class LMRSTree:
+    """
+    Class implementing the left most right sibling of a tree.
+    """
+
+    def __init__(self, root):
+        self.root = root
+
+    def root(self):
+        return self.root
+
+    def size(self):
+        # Start a deepth first traversal.
+        S = []  # New stack
+        S.append(self.root)
+        curr_size = 0
+        while len(S) != 0:
+            next = S.pop()
+            curr_size += 1
+            curr_child = next.lmchild
+            while curr_child is not None:
+                S.append(curr_child)
+                curr_child = curr_child.sibling
+        return curr_size
+
+    def is_root(self, v):
+        return v.key == self.root.key
+
+    def empty(self):
+        return self.root is None
+
+
+def add_child(v, new_vertex):
+    prev = v.lmchild
+    if prev is not None:
+        curr_child = prev.sibling
+    else:
+        v.lmchild = new_vertex
+        return
+    while curr_child is not None:
+        prev = curr_child
+        curr_child = curr_child.sibling
+    prev.sibling = new_vertex
+
+
+
+if __name__ == "__main__":
+
+    n = LMRSNode(0, "zero")
+    tree = LMRSTree(n)
+    x = LMRSNode(1, "one")
+    y = LMRSNode(11, "one one")
+    add_child(n, x)
+    show(n)
+    add_child(x, y)
+    x = LMRSNode(2, "two")
+    y = LMRSNode(3, "tree")
+    add_child(n, x)
+    add_child(n, y)
+    x = LMRSNode(4, "four")
+    add_child(y, x)
+    show(n)
