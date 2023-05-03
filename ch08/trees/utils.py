@@ -1,7 +1,6 @@
 """Utilities for all trees."""
-
-
 import lmrs
+import arrpnt
 
 
 def descendants(v):
@@ -46,7 +45,7 @@ def height(v):
 
 
 def size(v):
-    return 1 + len(descendants)
+    return 1 + len(descendants(v))
 
 
 def show_node(v, lvl):
@@ -69,31 +68,84 @@ def show(T):
             S.append((curr_lvl + 1, x))
 
 
-print("LMRS -- Mini test.")          
-r = lmrs.LMRSNode(1, 1)
-T = lmrs.LMRSTree(r)
-show(T)
-print("-"*10)
-lmrs.add_vertex(T, 1, 11, 11)
-lmrs.add_vertex(T, 11, 111, 111)
-lmrs.add_vertex(T, 11, 112, 112)
-lmrs.add_vertex(T, 111, 1111, 1111)
-lmrs.add_vertex(T, 1111, 11111, 11111)
-lmrs.add_vertex(T, 1, 12, 12)
-lmrs.add_vertex(T, 12, 121, 121)
-lmrs.add_vertex(T, 121, 1211, 1211)
-lmrs.add_vertex(T, 12, 122, 122)
-lmrs.add_vertex(T, 122, 1221, 1221)
-lmrs.add_vertex(T, 12, 123, 123)
-show(T)
-print("-"*10)
+def show_binary(T):
+    S = []  # New stack to store the nodes.
+    S.append((0, T.root))
+    while S:
+        curr_lvl, curr = S.pop()
+        show_node(curr, curr_lvl)
+        if curr.right is not None:
+            S.append((curr_lvl + 1, curr.right))
+        if curr.left is not None:
+            S.append((curr_lvl + 1, curr.left))
 
-print("Descendants")
-for x in descendants(lmrs.search_key(T, 11)):
-    print(x)
+def show_inorder(x, txt):
+    if x.left is not None:
+        txt = show_inorder(x.left, txt)
+    txt += " " + str(x)
+    if x.right is not None:
+        txt = show_inorder(x.right, txt)
+    return txt
 
-print("Ancestors")
-for x in ancestors(lmrs.search_key(T, 1221)):
-    print(x)
+if __name__=="__main__":
+        
+    print("LMRS -- Mini test.")
+    r = lmrs.LMRSNode(1, 1)
+    T = lmrs.LMRSTree(r)
+    show(T)
+    print("-"*10)
+    lmrs.add_vertex(T, 1, 11, 11)
+    lmrs.add_vertex(T, 11, 111, 111)
+    lmrs.add_vertex(T, 11, 112, 112)
+    lmrs.add_vertex(T, 111, 1111, 1111)
+    lmrs.add_vertex(T, 1111, 11111, 11111)
+    lmrs.add_vertex(T, 1, 12, 12)
+    lmrs.add_vertex(T, 12, 121, 121)
+    lmrs.add_vertex(T, 121, 1211, 1211)
+    lmrs.add_vertex(T, 12, 122, 122)
+    lmrs.add_vertex(T, 122, 1221, 1221)
+    lmrs.add_vertex(T, 12, 123, 123)
+    show(T)
+    print("-"*10)
 
-print(height(r))
+    print("Descendants")
+    for x in descendants(lmrs.search_key(T, 11)):
+        print(x)
+
+    print("Ancestors")
+    for x in ancestors(lmrs.search_key(T, 1221)):
+        print(x)
+
+    print(height(r))
+
+    print("--"*10)
+
+
+    r = arrpnt.ArrayPntNode(1, 1, 6)
+    T = arrpnt.ArrayTree(r)
+    show(T)
+    print("-"*10)
+    arrpnt.add_vertex(T, 1, 11, 11)
+    arrpnt.add_vertex(T, 11, 111, 111)
+    arrpnt.add_vertex(T, 11, 112, 112)
+    arrpnt.add_vertex(T, 111, 1111, 1111)
+    arrpnt.add_vertex(T, 1111, 11111, 11111)
+    arrpnt.add_vertex(T, 1, 12, 12)
+    arrpnt.add_vertex(T, 12, 121, 121)
+    arrpnt.add_vertex(T, 121, 1211, 1211)
+    arrpnt.add_vertex(T, 12, 122, 122)
+    arrpnt.add_vertex(T, 122, 1221, 1221)
+    arrpnt.add_vertex(T, 12, 123, 123)
+    show(T)
+    print("-"*10)
+    print("Descendants")
+    for x in descendants(lmrs.search_key(T, 11)):
+        print(x)
+
+    print("Ancestors")
+    for x in ancestors(lmrs.search_key(T, 1221)):
+        print(x)
+
+    print(height(r))
+
+    print("--"*10)
